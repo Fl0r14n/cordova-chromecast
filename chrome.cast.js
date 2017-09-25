@@ -1215,6 +1215,6 @@ execute('setup', function(err) {
 	if (!err) {
 		chrome.cast.isAvailable = true;
 	} else {
-		throw new Error('Unable to setup chrome.cast API' + err);
+		// throw new Error('Unable to setup chrome.cast API' + err);
 	}
 });
