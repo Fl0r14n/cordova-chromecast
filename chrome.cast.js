@@ -1215,6 +1215,14 @@ execute('setup', function(err) {
 	if (!err) {
 		chrome.cast.isAvailable = true;
 	} else {
-		// throw new Error('Unable to setup chrome.cast API' + err);
+        // inject script if in browser mode
+        var head = document.getElementsByTagName('head')[0];
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = 'https://www.gstatic.com/cv/js/sender/v1/cast_sender.js';
+        script.onload = function () {
+			chrome.cast = window['chrome'].cast;
+        };
+        head.appendChild(script);
 	}
 });
