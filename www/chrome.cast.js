@@ -1,8 +1,8 @@
-var EventEmitter = require('acidhax.cordova.chromecast.EventEmitter');
+var EventEmitter = require('./EventEmitter');
 
 var chrome = {};
 chrome.cast = {
-	
+
 	/**
 	 * The API version.
 	 * @type {Array}
@@ -20,9 +20,9 @@ chrome.cast = {
 	/**
 	 * TODO: Update when the official API docs are finished
 	 * https://developers.google.com/cast/docs/reference/chrome/chrome.cast.ReceiverType
-	 * CAST: 
-	 * DIAL: 
-	 * CUSTOM: 
+	 * CAST:
+	 * DIAL:
+	 * CUSTOM:
 	 * @type {Object}
 	 */
 	ReceiverType: { CAST: "cast", DIAL: "dial", CUSTOM: "custom" },
@@ -174,7 +174,7 @@ chrome.cast = {
 	 * @param {chrome.cast.ErrorCode} 	code        The error code.
 	 * @param {string} 					description Human readable description of the error.
 	 * @param {Object} 					details     Details specific to the error.
-	 */	
+	 */
 	Error: function (code, description, details) {
 		this.code = code;
 		this.description = description || null;
@@ -273,7 +273,7 @@ chrome.cast = {
 		 * https://developers.google.com/cast/docs/reference/chrome/chrome.cast.media.timeout
 		 * @type {Object}
 		 */
-		timeout: { 
+		timeout: {
 			load: 0,
 			ob: 0,
 			pause: 0,
@@ -363,7 +363,7 @@ chrome.cast = {
 		 * @property {chrome.cast.Image[]} 				images 		Content images.
 		 * @property {string} 							releaseDate ISO 8601 date and/or time when the content was released, e.g.
 		 * @property {number} 							releaseYear Integer year when the content was released.
-		 * @property {string} 							studio 		Movie studio		
+		 * @property {string} 							studio 		Movie studio
 		 * @property {string} 							subtitle 	Content subtitle.
 		 * @property {string} 							title 		Content title.
 		 * @property {chrome.cast.media.MetadataType} 	type 		The type of metadata.
@@ -465,14 +465,14 @@ var _routeRefreshInterval = null;
 var _receiverAvailable = false;
 
 /**
- * Initializes the API. Note that either successCallback and errorCallback will be invoked once the API has finished initialization. 
+ * Initializes the API. Note that either successCallback and errorCallback will be invoked once the API has finished initialization.
  * The sessionListener and receiverListener may be invoked at any time afterwards, and possibly more than once.
  * @param  {chrome.cast.ApiConfig} apiConfig       The object with parameters to initialize the API. Must not be null.
- * @param  {function} successCallback 
+ * @param  {function} successCallback
  * @param  {function} errorCallback
  */
 chrome.cast.initialize = function (apiConfig, successCallback, errorCallback) {
-	if (!chrome.cast.isAvailable) { 
+	if (!chrome.cast.isAvailable) {
 		errorCallback(new chrome.cast.Error(chrome.cast.ErrorCode.API_NOT_INITIALIZED), 'The API is not initialized.', {});
 		return;
 	}
@@ -499,12 +499,12 @@ chrome.cast.initialize = function (apiConfig, successCallback, errorCallback) {
 };
 
 /**
- * Requests that a receiver application session be created or joined. 
- * By default, the SessionRequest passed to the API at initialization time is used; 
+ * Requests that a receiver application session be created or joined.
+ * By default, the SessionRequest passed to the API at initialization time is used;
  * 	this may be overridden by passing a different session request in opt_sessionRequest.
- * @param  {function} 					successCallback    
+ * @param  {function} 					successCallback
  * @param  {function} 					errorCallback      The possible errors are TIMEOUT, INVALID_PARAMETER, API_NOT_INITIALIZED, CANCEL, CHANNEL_ERROR, SESSION_ERROR, RECEIVER_UNAVAILABLE, and EXTENSION_MISSING. Note that the timeout timer starts after users select a receiver. Selecting a receiver requires user's action, which has no timeout.
- * @param  {chrome.cast.SessionRequest} opt_sessionRequest 
+ * @param  {chrome.cast.SessionRequest} opt_sessionRequest
  */
 chrome.cast.requestSession = function (successCallback, errorCallback, opt_sessionRequest) {
 	if (chrome.cast.isAvailable === false) {
@@ -546,8 +546,8 @@ chrome.cast.requestSession = function (successCallback, errorCallback, opt_sessi
 /**
  * Sets custom receiver list
  * @param {chrome.cast.Receiver[]} 	receivers       The new list. Must not be null.
- * @param {function} 				successCallback 
- * @param {function} 				errorCallback   
+ * @param {function} 				successCallback
+ * @param {function} 				errorCallback
  */
 chrome.cast.setCustomReceivers = function (receivers, successCallback, errorCallback) {
 	// TODO: Implement
@@ -571,7 +571,7 @@ chrome.cast.setCustomReceivers = function (receivers, successCallback, errorCall
  *
  * @property {Object} 							customData 	Custom data set by the receiver application.
  * @property {chrome.cast.media.Media} 			media 		The media that belong to this Cast session, including those loaded by other senders.
- * @property {Object[]} 						namespaces 	A list of the namespaces supported by the receiver application.	
+ * @property {Object[]} 						namespaces 	A list of the namespaces supported by the receiver application.
  * @property {chrome.cast.SenderApplication} 	senderApps 	The sender applications supported by the receiver application.
  * @property {string}							statusText 	Descriptive text for the current application content, for example “My Wedding Slideshow”.
  */
@@ -589,7 +589,7 @@ chrome.cast.Session.prototype = Object.create(EventEmitter.prototype);
 /**
  * Sets the receiver volume.
  * @param {number} 		newLevel        The new volume level between 0.0 and 1.0.
- * @param {function} 	successCallback 
+ * @param {function} 	successCallback
  * @param {function} 	errorCallback   The possible errors are TIMEOUT, API_NOT_INITIALIZED, INVALID_PARAMETER, CHANNEL_ERROR, and EXTENSION_MISSING.
  */
 chrome.cast.Session.prototype.setReceiverVolumeLevel = function (newLevel, successCallback, errorCallback) {
@@ -611,7 +611,7 @@ chrome.cast.Session.prototype.setReceiverVolumeLevel = function (newLevel, succe
 /**
  * Sets the receiver volume.
  * @param {boolean} muted 				The new muted status.
- * @param {function} successCallback 
+ * @param {function} successCallback
  * @param {function} errorCallback   	The possible errors are TIMEOUT, API_NOT_INITIALIZED, INVALID_PARAMETER, CHANNEL_ERROR, and EXTENSION_MISSING.
  */
 chrome.cast.Session.prototype.setReceiverMuted = function (muted, successCallback, errorCallback) {
@@ -631,7 +631,7 @@ chrome.cast.Session.prototype.setReceiverMuted = function (muted, successCallbac
 
 /**
  * Stops the running receiver application associated with the session.
- * @param {function} successCallback 
+ * @param {function} successCallback
  * @param {function} errorCallback   The possible errors are TIMEOUT, API_NOT_INITIALIZED, CHANNEL_ERROR, and EXTENSION_MISSING.
  */
 chrome.cast.Session.prototype.stop = function (successCallback, errorCallback) {
@@ -651,7 +651,7 @@ chrome.cast.Session.prototype.stop = function (successCallback, errorCallback) {
 
 /**
  * Leaves the current session.
- * @param {function} successCallback 
+ * @param {function} successCallback
  * @param {function} errorCallback   The possible errors are TIMEOUT, API_NOT_INITIALIZED, CHANNEL_ERROR, and EXTENSION_MISSING.
  */
 chrome.cast.Session.prototype.leave = function (successCallback, errorCallback) {
@@ -670,10 +670,10 @@ chrome.cast.Session.prototype.leave = function (successCallback, errorCallback) 
 };
 
 /**
- * Sends a message to the receiver application on the given namespace. 
- * The successCallback is invoked when the message has been submitted to the messaging channel. 
+ * Sends a message to the receiver application on the given namespace.
+ * The successCallback is invoked when the message has been submitted to the messaging channel.
  * Delivery to the receiver application is best effort and not guaranteed.
- * @param  {string} 			namespace       
+ * @param  {string} 			namespace
  * @param  {Object or string} 	message         Must not be null
  * @param  {[type]} 			successCallback Invoked when the message has been sent. Must not be null.
  * @param  {[type]} 			errorCallback   Invoked on error. The possible errors are TIMEOUT, API_NOT_INITIALIZED, INVALID_PARAMETER, CHANNEL_ERROR, SESSION_ERROR, and EXTENSION_MISSING
@@ -719,7 +719,7 @@ chrome.cast.Session.prototype.loadMedia = function (loadRequest, successCallback
 			_currentMedia.currentTime = obj.currentTime /* ??? */
 
 			// TODO: Fill in the rest of the media properties
-			
+
 			successCallback(_currentMedia);
 
 		} else {
@@ -729,9 +729,9 @@ chrome.cast.Session.prototype.loadMedia = function (loadRequest, successCallback
 };
 
 /**
- * Adds a listener that is invoked when the status of the Session has changed. 
- * Changes to the following properties will trigger the listener: statusText, namespaces, customData, and the volume of the receiver. 
- * The callback will be invoked with 'true' (isAlive) parameter. 
+ * Adds a listener that is invoked when the status of the Session has changed.
+ * Changes to the following properties will trigger the listener: statusText, namespaces, customData, and the volume of the receiver.
+ * The callback will be invoked with 'true' (isAlive) parameter.
  * When this session is ended, the callback will be invoked with 'false' (isAlive);
  * @param {function} listener The listener to add.
  */
@@ -748,7 +748,7 @@ chrome.cast.Session.prototype.removeUpdateListener = function (listener) {
 };
 
 /**
- * Adds a listener that is invoked when a message is received from the receiver application. 
+ * Adds a listener that is invoked when a message is received from the receiver application.
  * The listener is invoked with the the namespace as the first argument and the message as the second argument.
  * @param {string} namespace The namespace to listen on.
  * @param {function} listener  The listener to add.
@@ -785,7 +785,7 @@ chrome.cast.Session.prototype.removeMediaListener = function (listener) {
 
 
 chrome.cast.Session.prototype._update = function(isAlive, obj) {
-	
+
 	this.appId = obj.appId;
 	this.appImages = obj.appImages;
 	this.displayName = obj.displayName;
@@ -830,11 +830,11 @@ chrome.cast.media.Media = function(sessionId, mediaSessionId) {
 	this.currentTime = 0;
 	this.playbackRate = 1;
 	this.playerState = chrome.cast.media.PlayerState.BUFFERING;
-	this.supportedMediaCommands = [ 
-		chrome.cast.media.MediaCommand.PAUSE, 
-		chrome.cast.media.MediaCommand.SEEK, 
-		chrome.cast.media.MediaCommand.STREAM_VOLUME, 
-		chrome.cast.media.MediaCommand.STREAM_MUTE 
+	this.supportedMediaCommands = [
+		chrome.cast.media.MediaCommand.PAUSE,
+		chrome.cast.media.MediaCommand.SEEK,
+		chrome.cast.media.MediaCommand.STREAM_VOLUME,
+		chrome.cast.media.MediaCommand.STREAM_MUTE
 	];
 	this.volume = new chrome.cast.Volume(1, false);
 	this._lastUpdatedTime = Date.now();
@@ -987,7 +987,7 @@ chrome.cast.media.Media.prototype.getEstimatedTime = function () {
 };
 
 /**
- * Adds a listener that is invoked when the status of the media has changed. 
+ * Adds a listener that is invoked when the status of the media has changed.
  * Changes to the following properties will trigger the listener: currentTime, volume, metadata, playbackRate, playerState, customData.
  * @param {function} listener The listener to add. The parameter indicates whether the Media object is still alive.
  */
@@ -1214,15 +1214,5 @@ function handleError(err, callback) {
 execute('setup', function(err) {
 	if (!err) {
 		chrome.cast.isAvailable = true;
-	} else {
-        // inject script if in browser mode
-        var head = document.getElementsByTagName('head')[0];
-        var script = document.createElement('script');
-        script.type = 'text/javascript';
-        script.src = 'https://www.gstatic.com/cv/js/sender/v1/cast_sender.js';
-        script.onload = function () {
-			chrome.cast = window['chrome'].cast;
-        };
-        head.appendChild(script);
 	}
 });
